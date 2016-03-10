@@ -56,3 +56,28 @@ func TestAnyItemOnArrayNotInCondition(t *testing.T) {
   result := Any(elements, condition)
   assert.False(t, result, fmt.Sprintf("array %v must not have any item in this condition", elements))
 }
+
+func TestNoneItemOnArrayInCondition(t *testing.T) {
+  var elements []int
+  elements = append(elements, 10, 11, 5)
+
+  condition := func(item int) bool {
+    return item >= 10
+  }
+
+  result := None(elements, condition)
+  assert.False(t, result, fmt.Sprintf("array %v must not have any item in this condition", elements))
+}
+
+func TestCollect(t *testing.T) {
+  var elements, expected []int
+  elements = append(elements, 10, 11, 5)
+  expected = append(expected, 10, 11)
+
+  condition := func(item int) bool {
+    return item >= 10
+  }
+
+  result := Collect(elements, condition)
+  assert.Equal(t, result, expected)
+}
