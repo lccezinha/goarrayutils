@@ -10,7 +10,7 @@ func Include(arr []interface{}, searchedItem interface{}) bool {
   return false
 }
 
-func Any(arr []int, condition func(int) bool) bool {
+func Any(arr []interface{}, condition func(interface{}) bool) bool {
   for _, item := range arr {
     if condition(item) {
       return true
@@ -20,12 +20,12 @@ func Any(arr []int, condition func(int) bool) bool {
   return false
 }
 
-func None(arr []int, condition func(int) bool) bool {
+func None(arr []interface{}, condition func(interface{}) bool) bool {
   return !Any(arr, condition)
 }
 
-func Collect(arr []int, condition func(int) bool) []int {
-  var result []int
+func Collect(arr []interface{}, condition func(interface{}) bool) interface{} {
+  var result []interface{}
 
   for _, item := range arr {
     if condition(item) {

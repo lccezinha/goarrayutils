@@ -24,58 +24,73 @@ func TestIncludeItemOnArrayOfString(t *testing.T) {
   assert.True(t, result, fmt.Sprintf("array %v must contain item %s", elements, item))
 }
 
-func TestIncludeItemOnArrayOfFloat(t *testing.T) {
+func TestAnyItemOnArrayOfIntInCondition(t *testing.T) {
   var elements []interface{}
-  elements = append(elements, 10.0, 11.2, 5.2)
-
-  item := 11.2
-  result := Include(elements, item)
-  assert.True(t, result, fmt.Sprintf("array %v must contain item %.1f", elements, item))
-}
-
-func TestAnyItemOnArrayInCondition(t *testing.T) {
-  var elements []int
   elements = append(elements, 10, 11, 5)
 
-  condition := func(item int) bool {
-    return item >= 10
+  condition := func(item interface{}) bool {
+    return item.(int) >= 10
   }
 
   result := Any(elements, condition)
   assert.True(t, result, fmt.Sprintf("array %v must have any item in this condition", elements))
 }
 
-func TestAnyItemOnArrayNotInCondition(t *testing.T) {
-  var elements []int
+func TestAnyItemOnArrayOfStringsInCondition(t *testing.T) {
+  var elements []interface{}
+  elements = append(elements, "Luiz", "Cezer", "Cezinha")
+
+  condition := func(item interface{}) bool {
+    return item.(string) == "Luiz"
+  }
+
+  result := Any(elements, condition)
+  assert.True(t, result, fmt.Sprintf("array %v must have any item in this condition", elements))
+}
+
+func TestAnyItemOnArrayOfIntNotInCondition(t *testing.T) {
+  var elements []interface{}
   elements = append(elements, 10, 11, 5)
 
-  condition := func(item int) bool {
-    return item >= 30
+  condition := func(item interface{}) bool {
+    return item.(int) >= 30
   }
 
   result := Any(elements, condition)
   assert.False(t, result, fmt.Sprintf("array %v must not have any item in this condition", elements))
 }
 
+func TestAnyItemOnArrayOfStringsNotInCondition(t *testing.T) {
+  var elements []interface{}
+  elements = append(elements, "Luiz", "Cezer", "Cezinha")
+
+  condition := func(item interface{}) bool {
+    return item.(string) == "Xunda"
+  }
+
+  result := Any(elements, condition)
+  assert.False(t, result, fmt.Sprintf("array %v must have any item in this condition", elements))
+}
+
 func TestNoneItemOnArrayInCondition(t *testing.T) {
-  var elements []int
+  var elements []interface{}
   elements = append(elements, 10, 11, 5)
 
-  condition := func(item int) bool {
-    return item >= 10
+  condition := func(item interface{}) bool {
+    return item.(int) >= 10
   }
 
   result := None(elements, condition)
   assert.False(t, result, fmt.Sprintf("array %v must not have any item in this condition", elements))
 }
 
-func TestCollect(t *testing.T) {
-  var elements, expected []int
+func TestCollectReturnNewArray(t *testing.T) {
+  var elements, expected []interface{}
   elements = append(elements, 10, 11, 5)
   expected = append(expected, 10, 11)
 
-  condition := func(item int) bool {
-    return item >= 10
+  condition := func(item interface{}) bool {
+    return item.(int) >= 10
   }
 
   result := Collect(elements, condition)
