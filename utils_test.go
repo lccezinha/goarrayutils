@@ -96,3 +96,12 @@ func TestCollectReturnNewArray(t *testing.T) {
   result := Collect(elements, condition)
   assert.Equal(t, result, expected)
 }
+
+func TestCompact(t *testing.T) {
+  var elements, expected []interface{}
+  elements = append(elements, 10, 11, nil, 5)
+  expected = append(expected, 10, 11, 5)
+
+  result := Compact(elements)
+  assert.Equal(t, result, expected)
+}

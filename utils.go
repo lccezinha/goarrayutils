@@ -35,3 +35,15 @@ func Collect(arr []interface{}, condition func(interface{}) bool) interface{} {
 
   return result
 }
+
+func Compact(arr []interface{}) interface{} {
+  var result []interface{}
+
+  for _, item := range arr {
+    if item != nil {
+      result = append(result, item)
+    }
+  }
+
+  return result
+}
