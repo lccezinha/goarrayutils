@@ -1,13 +1,13 @@
 package arrayutils
 
 import (
+  "fmt"
   "github.com/stretchr/testify/assert"
   "testing"
-  "fmt"
 )
 
 func TestIncludeItemOnArrayOfInt(t *testing.T) {
-  var elements []interface{}
+  var elements []int
   elements = append(elements, 1, 2, 3)
 
   item := 3
@@ -16,7 +16,7 @@ func TestIncludeItemOnArrayOfInt(t *testing.T) {
 }
 
 func TestIncludeItemOnArrayOfString(t *testing.T) {
-  var elements []interface{}
+  var elements []string
   elements = append(elements, "Luiz", "Cezer", "Cezinha")
 
   item := "Luiz"
@@ -25,7 +25,7 @@ func TestIncludeItemOnArrayOfString(t *testing.T) {
 }
 
 func TestAnyItemOnArrayOfIntInCondition(t *testing.T) {
-  var elements []interface{}
+  var elements []int
   elements = append(elements, 10, 11, 5)
 
   condition := func(item interface{}) bool {
@@ -37,7 +37,7 @@ func TestAnyItemOnArrayOfIntInCondition(t *testing.T) {
 }
 
 func TestAnyItemOnArrayOfStringsInCondition(t *testing.T) {
-  var elements []interface{}
+  var elements []string
   elements = append(elements, "Luiz", "Cezer", "Cezinha")
 
   condition := func(item interface{}) bool {
@@ -49,7 +49,7 @@ func TestAnyItemOnArrayOfStringsInCondition(t *testing.T) {
 }
 
 func TestAnyItemOnArrayOfIntNotInCondition(t *testing.T) {
-  var elements []interface{}
+  var elements []int
   elements = append(elements, 10, 11, 5)
 
   condition := func(item interface{}) bool {
@@ -61,7 +61,7 @@ func TestAnyItemOnArrayOfIntNotInCondition(t *testing.T) {
 }
 
 func TestAnyItemOnArrayOfStringsNotInCondition(t *testing.T) {
-  var elements []interface{}
+  var elements []string
   elements = append(elements, "Luiz", "Cezer", "Cezinha")
 
   condition := func(item interface{}) bool {
@@ -73,11 +73,23 @@ func TestAnyItemOnArrayOfStringsNotInCondition(t *testing.T) {
 }
 
 func TestNoneItemOnArrayInCondition(t *testing.T) {
-  var elements []interface{}
+  var elements []int
   elements = append(elements, 10, 11, 5)
 
   condition := func(item interface{}) bool {
     return item.(int) >= 10
+  }
+
+  result := None(elements, condition)
+  assert.False(t, result, fmt.Sprintf("array %v must not have any item in this condition", elements))
+}
+
+func TestNoneItemOnArrayOfStringInCondition(t *testing.T) {
+  var elements []string
+  elements = append(elements, "Cezinha", "Cezer", "Luiz")
+
+  condition := func(item interface{}) bool {
+    return item.(string) != "Filho"
   }
 
   result := None(elements, condition)

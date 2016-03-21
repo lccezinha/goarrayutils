@@ -1,8 +1,15 @@
 package arrayutils
 
-func Include(arr []interface{}, searchedItem interface{}) bool {
-  for _, item := range arr {
-    if item == searchedItem {
+import "reflect"
+
+func Include(slice interface{}, searchedItem interface{}) bool {
+  values := reflect.ValueOf(slice)
+  arr := make([]interface{}, values.Len())
+
+  for i := 0; i < values.Len(); i++ {
+    arr[i] = values.Index(i).Interface()
+
+    if arr[i] == searchedItem {
       return true
     }
   }
@@ -10,9 +17,14 @@ func Include(arr []interface{}, searchedItem interface{}) bool {
   return false
 }
 
-func Any(arr []interface{}, condition func(interface{}) bool) bool {
-  for _, item := range arr {
-    if condition(item) {
+func Any(slice interface{}, condition func(interface{}) bool) bool {
+  values := reflect.ValueOf(slice)
+  arr := make([]interface{}, values.Len())
+
+  for i := 0; i < values.Len(); i++ {
+    arr[i] = values.Index(i).Interface()
+
+    if condition(arr[i]) {
       return true
     }
   }
@@ -20,28 +32,36 @@ func Any(arr []interface{}, condition func(interface{}) bool) bool {
   return false
 }
 
-func None(arr []interface{}, condition func(interface{}) bool) bool {
-  return !Any(arr, condition)
+func None(slice interface{}, condition func(interface{}) bool) bool {
+  return !Any(slice, condition)
 }
 
-func Collect(arr []interface{}, condition func(interface{}) bool) interface{} {
+func Collect(slice []interface{}, condition func(interface{}) bool) interface{} {
+  values := reflect.ValueOf(slice)
+  arr    := make([]interface{}, values.Len())
   var result []interface{}
 
-  for _, item := range arr {
-    if condition(item) {
-      result = append(result, item)
+  for i := 0; i < values.Len(); i++ {
+    arr[i] = values.Index(i).Interface()
+
+    if condition(arr[i]) {
+      result = append(result, arr[i])
     }
   }
 
   return result
 }
 
-func Compact(arr []interface{}) interface{} {
+func Compact(slice interface{}) interface{} {
+  values := reflect.ValueOf(slice)
+  arr := make([]interface{}, values.Len())
   var result []interface{}
 
-  for _, item := range arr {
-    if item != nil {
-      result = append(result, item)
+  for i := 0; i < values.Len(); i++ {
+    arr[i] = values.Index(i).Interface()
+
+    if arr[i] != nil {
+      result = append(result, arr[i])
     }
   }
 
