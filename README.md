@@ -19,7 +19,7 @@ import "fmt"
 import "github.com/lccezinha/goarrayutils"
 
 func main() {
-  var arr []interface{}
+  var arr []int
   arr = append(arr, 1, 2, 3)
   expected := 1
 
@@ -40,7 +40,7 @@ import "fmt"
 import "github.com/lccezinha/goarrayutils"
 
 func main() {
-  var arr []interface{}
+  var arr []int
   arr = append(arr, 1, 2, 3)
 
   condition := func(item interface{}) bool {
@@ -64,7 +64,7 @@ import "fmt"
 import "github.com/lccezinha/goarrayutils"
 
 func main() {
-  var arr []interface{}
+  var arr []int
   arr = append(arr, 1, 2, 3)
 
   condition := func(item interface{}) bool {
