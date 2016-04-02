@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/lccezinha/goarrayutils.svg?branch=master)](https://travis-ci.org/lccezinha/goarrayutils)
+
 A bunch of methods to make array verifications in golang easier, inspired in Ruby array methods.
 
 ### Methods
