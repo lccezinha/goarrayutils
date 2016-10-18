@@ -9,6 +9,7 @@ Some methods to make slice verifications in Golang easier.
   - [None](#none)
   - [Collect](#collect)
   - [Compact](#compact)
+  - [All](#all)
 
 ### Examples of Use
 
