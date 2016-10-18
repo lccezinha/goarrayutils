@@ -25,7 +25,7 @@ func main() {
   slice = append(slice, 1, 2, 3)
   expected := 1
 
-  result := sliceayutils.Include(slice, expected)
+  result := sliceutils.Include(slice, expected)
 
   fmt.Println(result)
 }
@@ -49,7 +49,7 @@ func main() {
     return item.(int) >= 2
   }
 
-  result := sliceayutils.Any(slice, condition)
+  result := sliceutils.Any(slice, condition)
 
   fmt.Println(result)
 }
@@ -73,7 +73,7 @@ func main() {
     return item.(int) >= 5
   }
 
-  result := sliceayutils.None(slice, condition)
+  result := sliceutils.None(slice, condition)
 
   fmt.Println(result)
 }
@@ -97,7 +97,7 @@ func main() {
     return item.(int) >= 2
   }
 
-  result := sliceayutils.Collect(slice, condition)
+  result := sliceutils.Collect(slice, condition)
 
   fmt.Println(result)
 }
@@ -117,10 +117,34 @@ func main() {
   var slice []interface{}
   slice = append(slice, 1, 2, 3, nil, 4, nil, 5)
 
-  result := sliceayutils.Compact(slice)
+  result := sliceutils.Compact(slice)
 
   fmt.Println(result)
 }
 
 // [1, 2, 3, 4, 5]
+```
+
+#### All
+
+```go
+package main
+
+import "fmt"
+import "github.com/lccezinha/gosliceutils"
+
+func main() {
+  var slice []interface{}
+  slice = append(slice, 1, 2, 3)
+
+  condition := func(item interface{}) bool {
+    return item.(int) > 0
+  }
+
+  result := sliceutils.All(slice, condition)
+
+  fmt.Println(result)
+}
+
+// true
 ```

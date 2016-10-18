@@ -67,3 +67,19 @@ func Compact(slice interface{}) interface{} {
 
 	return result
 }
+
+func All(slice interface{}, condition func(item interface{}) bool) bool {
+	values := reflect.ValueOf(slice)
+	resultSlice := make([]interface{}, values.Len())
+	returnValue := true
+
+	for i := 0; i < values.Len(); i++ {
+		resultSlice[i] = values.Index(i).Interface()
+
+		if condition(resultSlice[i]) == false {
+			returnValue = false
+		}
+	}
+
+	return returnValue
+}

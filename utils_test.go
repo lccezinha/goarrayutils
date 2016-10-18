@@ -118,3 +118,27 @@ func TestCompact(t *testing.T) {
 	result := Compact(elements)
 	assert.Equal(t, result, expected)
 }
+
+func TestAllWithAllValidValues(t *testing.T) {
+	var elements []interface{}
+	elements = append(elements, 1, 2, 3)
+
+	condition := func(item interface{}) bool {
+		return item.(int) > 0
+	}
+
+	result := All(elements, condition)
+	assert.True(t, result)
+}
+
+func TestAllWithAnyInvalidValue(t *testing.T) {
+	var elements []interface{}
+	elements = append(elements, 1, 2, 3)
+
+	condition := func(item interface{}) bool {
+		return item.(int) > 2
+	}
+
+	result := All(elements, condition)
+	assert.False(t, result)
+}
