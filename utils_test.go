@@ -142,3 +142,16 @@ func TestAllWithAnyInvalidValue(t *testing.T) {
 	result := All(elements, condition)
 	assert.False(t, result)
 }
+
+func TestReject(t *testing.T) {
+	var elements, expected []interface{}
+	elements = append(elements, 1, 2, 3)
+	expected = append(expected, 1)
+
+	condition := func(item interface{}) bool {
+		return item.(int) >= 2
+	}
+
+	result := Reject(elements, condition)
+	assert.Equal(t, result, expected)
+}

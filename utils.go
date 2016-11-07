@@ -83,3 +83,19 @@ func All(slice interface{}, condition func(item interface{}) bool) bool {
 
 	return returnValue
 }
+
+func Reject(slice []interface{}, condition func(interface{}) bool) interface{} {
+	values := reflect.ValueOf(slice)
+	resultSlice := make([]interface{}, values.Len())
+	var result []interface{}
+
+	for i := 0; i < values.Len(); i++ {
+		resultSlice[i] = values.Index(i).Interface()
+
+		if !condition(resultSlice[i]) {
+			result = append(result, resultSlice[i])
+		}
+	}
+
+	return result
+}
