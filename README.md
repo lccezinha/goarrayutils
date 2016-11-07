@@ -10,6 +10,7 @@ Some methods to make slice verifications in Golang easier.
   - [Collect](#collect)
   - [Compact](#compact)
   - [All](#all)
+  - [Reject](#reject)
 
 ### Examples of Use
 
@@ -148,4 +149,28 @@ func main() {
 }
 
 // true
+```
+
+#### Reject
+
+```go
+package main
+
+import "fmt"
+import "github.com/lccezinha/gosliceutils"
+
+func main() {
+  var slice []interface{}
+  slice = append(slice, 1, 2, 3)
+
+  condition := func(item interface{}) bool {
+    return item.(int) > 1
+  }
+
+  result := sliceutils.Reject(slice, condition)
+
+  fmt.Println(result)
+}
+
+// [1]
 ```
