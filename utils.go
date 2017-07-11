@@ -68,7 +68,7 @@ func Compact(slice interface{}) interface{} {
 	return result
 }
 
-func All(slice interface{}, callback func(item interface{}) bool) bool {
+func All(slice interface{}, callback func(interface{}) bool) bool {
 	values := reflect.ValueOf(slice)
 	resultSlice := make([]interface{}, values.Len())
 	returnValue := true
