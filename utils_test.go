@@ -25,76 +25,76 @@ func TestIncludeItemOnArrayOfString(t *testing.T) {
 	assert.True(t, result, fmt.Sprintf("slice %v must contain item %s", elements, item))
 }
 
-func TestAnyItemOnArrayOfIntInCondition(t *testing.T) {
+func TestAnyItemOnArrayOfIntInCallback(t *testing.T) {
 	var elements []int
 	elements = append(elements, 10, 11, 5)
 
-	condition := func(item interface{}) bool {
+	callback := func(item interface{}) bool {
 		return item.(int) >= 10
 	}
 
-	result := Any(elements, condition)
-	assert.True(t, result, fmt.Sprintf("slice %v must have any item in this condition", elements))
+	result := Any(elements, callback)
+	assert.True(t, result, fmt.Sprintf("slice %v must have any item in this callback", elements))
 }
 
-func TestAnyItemOnArrayOfStringsInCondition(t *testing.T) {
+func TestAnyItemOnArrayOfStringsInCallback(t *testing.T) {
 	var elements []string
 	elements = append(elements, "Luiz", "Cezer", "Cezinha")
 
-	condition := func(item interface{}) bool {
+	callback := func(item interface{}) bool {
 		return item.(string) == "Luiz"
 	}
 
-	result := Any(elements, condition)
-	assert.True(t, result, fmt.Sprintf("slice %v must have any item in this condition", elements))
+	result := Any(elements, callback)
+	assert.True(t, result, fmt.Sprintf("slice %v must have any item in this callback", elements))
 }
 
-func TestAnyItemOnArrayOfIntNotInCondition(t *testing.T) {
+func TestAnyItemOnArrayOfIntNotInCallback(t *testing.T) {
 	var elements []int
 	elements = append(elements, 10, 11, 5)
 
-	condition := func(item interface{}) bool {
+	callback := func(item interface{}) bool {
 		return item.(int) >= 30
 	}
 
-	result := Any(elements, condition)
-	assert.False(t, result, fmt.Sprintf("slice %v must not have any item in this condition", elements))
+	result := Any(elements, callback)
+	assert.False(t, result, fmt.Sprintf("slice %v must not have any item in this callback", elements))
 }
 
-func TestAnyItemOnArrayOfStringsNotInCondition(t *testing.T) {
+func TestAnyItemOnArrayOfStringsNotInCallback(t *testing.T) {
 	var elements []string
 	elements = append(elements, "Luiz", "Cezer", "Cezinha")
 
-	condition := func(item interface{}) bool {
+	callback := func(item interface{}) bool {
 		return item.(string) == "Xunda"
 	}
 
-	result := Any(elements, condition)
-	assert.False(t, result, fmt.Sprintf("slice %v must have any item in this condition", elements))
+	result := Any(elements, callback)
+	assert.False(t, result, fmt.Sprintf("slice %v must have any item in this callback", elements))
 }
 
-func TestNoneItemOnArrayInCondition(t *testing.T) {
+func TestNoneItemOnArrayInCallback(t *testing.T) {
 	var elements []int
 	elements = append(elements, 10, 11, 5)
 
-	condition := func(item interface{}) bool {
+	callback := func(item interface{}) bool {
 		return item.(int) >= 10
 	}
 
-	result := None(elements, condition)
-	assert.False(t, result, fmt.Sprintf("slice %v must not have any item in this condition", elements))
+	result := None(elements, callback)
+	assert.False(t, result, fmt.Sprintf("slice %v must not have any item in this callback", elements))
 }
 
-func TestNoneItemOnArrayOfStringInCondition(t *testing.T) {
+func TestNoneItemOnArrayOfStringInCallback(t *testing.T) {
 	var elements []string
 	elements = append(elements, "Cezinha", "Cezer", "Luiz")
 
-	condition := func(item interface{}) bool {
+	callback := func(item interface{}) bool {
 		return item.(string) != "Filho"
 	}
 
-	result := None(elements, condition)
-	assert.False(t, result, fmt.Sprintf("slice %v must not have any item in this condition", elements))
+	result := None(elements, callback)
+	assert.False(t, result, fmt.Sprintf("slice %v must not have any item in this callback", elements))
 }
 
 func TestCollectReturnNewArray(t *testing.T) {
@@ -102,11 +102,11 @@ func TestCollectReturnNewArray(t *testing.T) {
 	elements = append(elements, 10, 11, 5)
 	expected = append(expected, 10, 11)
 
-	condition := func(item interface{}) bool {
+	callback := func(item interface{}) bool {
 		return item.(int) >= 10
 	}
 
-	result := Collect(elements, condition)
+	result := Collect(elements, callback)
 	assert.Equal(t, result, expected)
 }
 
@@ -123,11 +123,11 @@ func TestAllWithAllValidValues(t *testing.T) {
 	var elements []interface{}
 	elements = append(elements, 1, 2, 3)
 
-	condition := func(item interface{}) bool {
+	callback := func(item interface{}) bool {
 		return item.(int) > 0
 	}
 
-	result := All(elements, condition)
+	result := All(elements, callback)
 	assert.True(t, result)
 }
 
@@ -135,11 +135,11 @@ func TestAllWithAnyInvalidValue(t *testing.T) {
 	var elements []interface{}
 	elements = append(elements, 1, 2, 3)
 
-	condition := func(item interface{}) bool {
+	callback := func(item interface{}) bool {
 		return item.(int) > 2
 	}
 
-	result := All(elements, condition)
+	result := All(elements, callback)
 	assert.False(t, result)
 }
 
@@ -148,10 +148,10 @@ func TestReject(t *testing.T) {
 	elements = append(elements, 1, 2, 3)
 	expected = append(expected, 1)
 
-	condition := func(item interface{}) bool {
+	callback := func(item interface{}) bool {
 		return item.(int) >= 2
 	}
 
-	result := Reject(elements, condition)
+	result := Reject(elements, callback)
 	assert.Equal(t, result, expected)
 }

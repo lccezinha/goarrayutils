@@ -17,14 +17,14 @@ func Include(slice interface{}, searchedItem interface{}) bool {
 	return false
 }
 
-func Any(slice interface{}, condition func(interface{}) bool) bool {
+func Any(slice interface{}, callback func(interface{}) bool) bool {
 	values := reflect.ValueOf(slice)
 	resultSlice := make([]interface{}, values.Len())
 
 	for i := 0; i < values.Len(); i++ {
 		resultSlice[i] = values.Index(i).Interface()
 
-		if condition(resultSlice[i]) {
+		if callback(resultSlice[i]) {
 			return true
 		}
 	}
@@ -32,11 +32,11 @@ func Any(slice interface{}, condition func(interface{}) bool) bool {
 	return false
 }
 
-func None(slice interface{}, condition func(interface{}) bool) bool {
-	return !Any(slice, condition)
+func None(slice interface{}, callback func(interface{}) bool) bool {
+	return !Any(slice, callback)
 }
 
-func Collect(slice []interface{}, condition func(interface{}) bool) interface{} {
+func Collect(slice []interface{}, callback func(interface{}) bool) interface{} {
 	values := reflect.ValueOf(slice)
 	resultSlice := make([]interface{}, values.Len())
 	var result []interface{}
@@ -44,7 +44,7 @@ func Collect(slice []interface{}, condition func(interface{}) bool) interface{} 
 	for i := 0; i < values.Len(); i++ {
 		resultSlice[i] = values.Index(i).Interface()
 
-		if condition(resultSlice[i]) {
+		if callback(resultSlice[i]) {
 			result = append(result, resultSlice[i])
 		}
 	}
@@ -68,7 +68,7 @@ func Compact(slice interface{}) interface{} {
 	return result
 }
 
-func All(slice interface{}, condition func(item interface{}) bool) bool {
+func All(slice interface{}, callback func(item interface{}) bool) bool {
 	values := reflect.ValueOf(slice)
 	resultSlice := make([]interface{}, values.Len())
 	returnValue := true
@@ -76,7 +76,7 @@ func All(slice interface{}, condition func(item interface{}) bool) bool {
 	for i := 0; i < values.Len(); i++ {
 		resultSlice[i] = values.Index(i).Interface()
 
-		if condition(resultSlice[i]) == false {
+		if callback(resultSlice[i]) == false {
 			returnValue = false
 		}
 	}
@@ -84,7 +84,7 @@ func All(slice interface{}, condition func(item interface{}) bool) bool {
 	return returnValue
 }
 
-func Reject(slice []interface{}, condition func(interface{}) bool) interface{} {
+func Reject(slice []interface{}, callback func(interface{}) bool) interface{} {
 	values := reflect.ValueOf(slice)
 	resultSlice := make([]interface{}, values.Len())
 	var result []interface{}
@@ -92,7 +92,7 @@ func Reject(slice []interface{}, condition func(interface{}) bool) interface{} {
 	for i := 0; i < values.Len(); i++ {
 		resultSlice[i] = values.Index(i).Interface()
 
-		if !condition(resultSlice[i]) {
+		if !callback(resultSlice[i]) {
 			result = append(result, resultSlice[i])
 		}
 	}
