@@ -47,11 +47,11 @@ func main() {
   var slice []int
   slice = append(slice, 1, 2, 3)
 
-  condition := func(item interface{}) bool {
+  callback := func(item interface{}) bool {
     return item.(int) >= 2
   }
 
-  result := sliceutils.Any(slice, condition)
+  result := sliceutils.Any(slice, callback)
 
   fmt.Println(result)
 }
@@ -71,11 +71,11 @@ func main() {
   var slice []int
   slice = append(slice, 1, 2, 3)
 
-  condition := func(item interface{}) bool {
+  callback := func(item interface{}) bool {
     return item.(int) >= 5
   }
 
-  result := sliceutils.None(slice, condition)
+  result := sliceutils.None(slice, callback)
 
   fmt.Println(result)
 }
@@ -95,11 +95,11 @@ func main() {
   var slice []interface{}
   slice = append(slice, 1, 2, 3)
 
-  condition := func(item interface{}) bool {
+  callback := func(item interface{}) bool {
     return item.(int) >= 2
   }
 
-  result := sliceutils.Collect(slice, condition)
+  result := sliceutils.Collect(slice, callback)
 
   fmt.Println(result)
 }
@@ -139,11 +139,11 @@ func main() {
   var slice []interface{}
   slice = append(slice, 1, 2, 3)
 
-  condition := func(item interface{}) bool {
+  callback := func(item interface{}) bool {
     return item.(int) > 0
   }
 
-  result := sliceutils.All(slice, condition)
+  result := sliceutils.All(slice, callback)
 
   fmt.Println(result)
 }
@@ -163,11 +163,11 @@ func main() {
   var slice []interface{}
   slice = append(slice, 1, 2, 3)
 
-  condition := func(item interface{}) bool {
+  callback := func(item interface{}) bool {
     return item.(int) > 1
   }
 
-  result := sliceutils.Reject(slice, condition)
+  result := sliceutils.Reject(slice, callback)
 
   fmt.Println(result)
 }
