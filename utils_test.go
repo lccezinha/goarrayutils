@@ -1,10 +1,8 @@
 package sliceutils
 
 import (
-	"fmt"
+	"reflect"
 	"testing"
-
-	"github.com/stretchr/testify/assert"
 )
 
 func TestIncludeItemOnArrayOfInt(t *testing.T) {
@@ -13,7 +11,10 @@ func TestIncludeItemOnArrayOfInt(t *testing.T) {
 
 	item := 3
 	result := Include(elements, item)
-	assert.True(t, result, fmt.Sprintf("slice %v must contain item %d", elements, item))
+
+	if !result {
+		t.Fatalf("slice %v must contain item %d", elements, item)
+	}
 }
 
 func TestIncludeItemOnArrayOfString(t *testing.T) {
@@ -22,7 +23,10 @@ func TestIncludeItemOnArrayOfString(t *testing.T) {
 
 	item := "Luiz"
 	result := Include(elements, item)
-	assert.True(t, result, fmt.Sprintf("slice %v must contain item %s", elements, item))
+
+	if !result {
+		t.Fatalf("slice %v must contain item %s", elements, item)
+	}
 }
 
 func TestAnyItemOnArrayOfIntInCallback(t *testing.T) {
@@ -34,7 +38,10 @@ func TestAnyItemOnArrayOfIntInCallback(t *testing.T) {
 	}
 
 	result := Any(elements, callback)
-	assert.True(t, result, fmt.Sprintf("slice %v must have any item in this callback", elements))
+
+	if !result {
+		t.Fatalf("slice %v must have any item in this callback", elements)
+	}
 }
 
 func TestAnyItemOnArrayOfStringsInCallback(t *testing.T) {
@@ -46,7 +53,10 @@ func TestAnyItemOnArrayOfStringsInCallback(t *testing.T) {
 	}
 
 	result := Any(elements, callback)
-	assert.True(t, result, fmt.Sprintf("slice %v must have any item in this callback", elements))
+
+	if !result {
+		t.Fatalf("slice %v must have some item in this callback", elements)
+	}
 }
 
 func TestAnyItemOnArrayOfIntNotInCallback(t *testing.T) {
@@ -58,7 +68,10 @@ func TestAnyItemOnArrayOfIntNotInCallback(t *testing.T) {
 	}
 
 	result := Any(elements, callback)
-	assert.False(t, result, fmt.Sprintf("slice %v must not have any item in this callback", elements))
+
+	if result {
+		t.Fatalf("slice %v must not have any item in this callback", elements)
+	}
 }
 
 func TestAnyItemOnArrayOfStringsNotInCallback(t *testing.T) {
@@ -70,7 +83,10 @@ func TestAnyItemOnArrayOfStringsNotInCallback(t *testing.T) {
 	}
 
 	result := Any(elements, callback)
-	assert.False(t, result, fmt.Sprintf("slice %v must have any item in this callback", elements))
+
+	if result {
+		t.Fatalf("slice %v must not have any item in this callback", elements)
+	}
 }
 
 func TestNoneItemOnArrayInCallback(t *testing.T) {
@@ -82,7 +98,10 @@ func TestNoneItemOnArrayInCallback(t *testing.T) {
 	}
 
 	result := None(elements, callback)
-	assert.False(t, result, fmt.Sprintf("slice %v must not have any item in this callback", elements))
+
+	if result {
+		t.Fatalf("slice %v must not have any item in this callback", elements)
+	}
 }
 
 func TestNoneItemOnArrayOfStringInCallback(t *testing.T) {
@@ -94,7 +113,10 @@ func TestNoneItemOnArrayOfStringInCallback(t *testing.T) {
 	}
 
 	result := None(elements, callback)
-	assert.False(t, result, fmt.Sprintf("slice %v must not have any item in this callback", elements))
+
+	if result {
+		t.Fatalf("slice %v must not have any item in this callback", elements)
+	}
 }
 
 func TestCollectReturnNewArray(t *testing.T) {
@@ -107,7 +129,10 @@ func TestCollectReturnNewArray(t *testing.T) {
 	}
 
 	result := Collect(elements, callback)
-	assert.Equal(t, result, expected)
+
+	if !reflect.DeepEqual(expected, result) {
+		t.Fatalf("slice %v must not have any item in this callback", elements)
+	}
 }
 
 func TestCompact(t *testing.T) {
@@ -116,7 +141,10 @@ func TestCompact(t *testing.T) {
 	expected = append(expected, 10, 11, 5)
 
 	result := Compact(elements)
-	assert.Equal(t, result, expected)
+
+	if !reflect.DeepEqual(expected, result) {
+		t.Fatalf("slice %v must not have any item in this callback", elements)
+	}
 }
 
 func TestAllWithAllValidValues(t *testing.T) {
@@ -128,7 +156,10 @@ func TestAllWithAllValidValues(t *testing.T) {
 	}
 
 	result := All(elements, callback)
-	assert.True(t, result)
+
+	if !result {
+		t.Fatalf("slice %v must not have any item in this callback", elements)
+	}
 }
 
 func TestAllWithAnyInvalidValue(t *testing.T) {
@@ -140,7 +171,10 @@ func TestAllWithAnyInvalidValue(t *testing.T) {
 	}
 
 	result := All(elements, callback)
-	assert.False(t, result)
+
+	if result {
+		t.Fatalf("slice %v must not have any item in this callback", elements)
+	}
 }
 
 func TestReject(t *testing.T) {
@@ -153,5 +187,8 @@ func TestReject(t *testing.T) {
 	}
 
 	result := Reject(elements, callback)
-	assert.Equal(t, result, expected)
+
+	if !reflect.DeepEqual(result, expected) {
+		t.Fatalf("slice %v must not have any item in this callback", elements)
+	}
 }
